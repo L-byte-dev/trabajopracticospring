@@ -26,6 +26,7 @@ public class ListaReproduccionMapper {
     public static ListaReproduccionDto mapToListaReproduccionDto(ListaReproduccion listaReproduccion, ListaReproduccionDto listaReproduccionDto) {
         listaReproduccionDto.setId(listaReproduccion.getId());
         listaReproduccionDto.setNombre(listaReproduccion.getNombre());
+        listaReproduccionDto.setCantCanciones(listaReproduccion.getCanciones().size());
 
         return listaReproduccionDto;
     }

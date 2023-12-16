@@ -4,6 +4,7 @@ import com.informatorio.trabajopracticospring.dominio.Usuario;
 import com.informatorio.trabajopracticospring.dto.usuario.UsuarioDto;
 import com.informatorio.trabajopracticospring.exception.NotFoundException;
 import com.informatorio.trabajopracticospring.mapper.usuario.UsuarioMapper;
+import com.informatorio.trabajopracticospring.mapper.listareproduccion.ListaReproduccionMapper;
 import com.informatorio.trabajopracticospring.repository.usuario.UsuarioRepository;
 import com.informatorio.trabajopracticospring.service.listareproduccion.ListaReproduccionService;
 import com.informatorio.trabajopracticospring.service.usuario.UsuarioService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
@@ -38,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         UsuarioDto usuarioDto = UsuarioMapper.mapToUsuarioDto(usuario, new UsuarioDto());
 
-        usuarioDto.setListasReproduccionDto(listaReproduccionService.obtenerListasDeReproduccionPorUsuario(idUsuario));
+        usuarioDto.setListasReproduccionDto(ListaReproduccionMapper.mapToListasReproduccionDto(usuario.getListasReproduccion(), new ArrayList<>()));
 
         return usuarioDto;
     }
