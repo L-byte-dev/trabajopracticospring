@@ -25,6 +25,16 @@ public class ListaReproduccionController {
     private ListaReproduccionService listaReproduccionService;
     private CancionService cancionService;
 
+
+    @GetMapping
+    public ResponseEntity<List<ListaReproduccionDto>> obtenerListaDeReproduccionPorNombre(@RequestParam(name = "nombre") String nombre) {
+
+        List<ListaReproduccionDto> listaReproduccionDto = listaReproduccionService.obtenerListaDeReproduccionPorNombre(nombre);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(listaReproduccionDto);
+    }
+
     @GetMapping("/usuario/{idUsuario}")
     public List<ListaReproduccionDto> obtenerListasDeReproduccionPorUsuario(@PathVariable(name = "idUsuario") UUID idUsuario){
         return listaReproduccionService.obtenerListasDeReproduccionPorUsuario(idUsuario);

@@ -31,8 +31,17 @@ public class ListaReproduccionServiceImpl implements ListaReproduccionService {
     private final UsuarioRepository usuarioRepository;
 
     @Override
+    public List<ListaReproduccionDto> obtenerListaDeReproduccionPorNombre(String nombre) {
+        List<ListaReproduccion> listaReproduccion = listaReproduccionRepository.findByPublicaAndNombreContainingIgnoreCase(true, nombre);
+        return ListaReproduccionMapper.mapToListasReproduccionDto(listaReproduccion, new ArrayList<>());
+    }
+
+    @Override
     public List<ListaReproduccionDto> obtenerListasDeReproduccionPorUsuario(UUID idUsuario) {
-        return ListaReproduccionMapper.mapToListasReproduccionDto(listaReproduccionRepository.findByUsuarioIdOrderByCreadoEnDesc(idUsuario), new ArrayList<>());
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new NotFoundException("Usuario","idUsuario",idUsuario.toString()));
+        List<ListaReproduccion> listaReproduccion = listaReproduccionRepository.findByUsuarioIdOrderByCreadoEnDesc(idUsuario);
+        return ListaReproduccionMapper.mapToListasReproduccionDto(listaReproduccion, new ArrayList<>());
     }
 
     @Override

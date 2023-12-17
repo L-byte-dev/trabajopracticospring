@@ -3,7 +3,6 @@ package com.informatorio.trabajopracticospring.mapper.artista;
 import com.informatorio.trabajopracticospring.dominio.Artista;
 import com.informatorio.trabajopracticospring.dto.artista.ArtistaCancionesDto;
 import com.informatorio.trabajopracticospring.mapper.cancion.CancionSinArtistaMapper;
-import com.informatorio.trabajopracticospring.mapper.genero.GeneroMapper;
 
 import java.util.ArrayList;
 

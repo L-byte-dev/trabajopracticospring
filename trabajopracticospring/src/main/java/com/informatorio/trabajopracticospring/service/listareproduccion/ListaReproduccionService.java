@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ListaReproduccionService {
+    List<ListaReproduccionDto> obtenerListaDeReproduccionPorNombre(String nombre);
     List<ListaReproduccionDto> obtenerListasDeReproduccionPorUsuario(UUID usuario);
     void crearListaReproduccion(UUID idUsuario, CrearListaReproduccionDto crearListaReproduccionDto);
     boolean actualizarListaReproduccion(UUID idUsuario, UUID idListaReproduccion, ListaReproduccionAtributosDto listaReproduccionAtributosDto);
