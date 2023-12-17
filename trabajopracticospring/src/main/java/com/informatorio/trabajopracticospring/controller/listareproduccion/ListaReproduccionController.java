@@ -1,13 +1,18 @@
 package com.informatorio.trabajopracticospring.controller.listareproduccion;
 
+import com.informatorio.trabajopracticospring.constants.ConstantsUtils;
 import com.informatorio.trabajopracticospring.dto.cancion.CancionDto;
+import com.informatorio.trabajopracticospring.dto.listareproduccion.CrearListaReproduccionDto;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReproduccionDto;
+import com.informatorio.trabajopracticospring.dto.respuesta.RespuestaDto;
+import com.informatorio.trabajopracticospring.dto.usuario.UsuarioDto;
 import com.informatorio.trabajopracticospring.service.cancion.CancionService;
 import com.informatorio.trabajopracticospring.service.listareproduccion.ListaReproduccionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +37,16 @@ public class ListaReproduccionController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(cancionesDto);
+    }
+
+    @Transactional
+    @PostMapping("/usuario/{idUsuario}")
+    public ResponseEntity<RespuestaDto> crearListaReproduccion(@PathVariable(name = "idUsuario") UUID idUsuario, @RequestBody CrearListaReproduccionDto crearListaReproduccionDto){
+        listaReproduccionService.crearListaReproduccion(idUsuario, crearListaReproduccionDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new RespuestaDto(ConstantsUtils.STATUS_201,ConstantsUtils.MESSAGE_201));
     }
 
 }

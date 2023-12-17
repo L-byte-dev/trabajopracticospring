@@ -6,7 +6,6 @@ import com.informatorio.trabajopracticospring.exception.NotFoundException;
 import com.informatorio.trabajopracticospring.mapper.usuario.UsuarioMapper;
 import com.informatorio.trabajopracticospring.mapper.listareproduccion.ListaReproduccionMapper;
 import com.informatorio.trabajopracticospring.repository.usuario.UsuarioRepository;
-import com.informatorio.trabajopracticospring.service.listareproduccion.ListaReproduccionService;
 import com.informatorio.trabajopracticospring.service.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    private final ListaReproduccionService listaReproduccionService;
 
     @Transactional
     @Override
     public void crearUsuario(UsuarioDto usuarioDto) {
         Usuario nuevoUsuario = UsuarioMapper.mapToUsuario(usuarioDto, new Usuario());
         nuevoUsuario.setId(UUID.randomUUID());
-        nuevoUsuario.setCreadoPor("Anonimo");
+        nuevoUsuario.setCreadoPor("Admin");
         nuevoUsuario.setCreadoEn(LocalDateTime.now());
 
         usuarioRepository.save(nuevoUsuario);

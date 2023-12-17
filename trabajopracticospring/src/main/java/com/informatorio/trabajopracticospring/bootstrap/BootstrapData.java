@@ -1,3 +1,4 @@
+/*
 package com.informatorio.trabajopracticospring.bootstrap;
 
 import com.informatorio.trabajopracticospring.dominio.*;
@@ -49,22 +50,24 @@ public class BootstrapData implements CommandLineRunner {
 
         Usuario usuario1 = new Usuario(UUID.randomUUID(), "Usuario 1", "user1", new ArrayList<>());
         Usuario usuario2 = new Usuario(UUID.randomUUID(), "Usuario 2", "user2", new ArrayList<>());
-        usuario1.setCreadoPor("Anonimo");
+        usuario1.setCreadoPor("Admin");
         usuario1.setCreadoEn(LocalDateTime.now());
-        usuario2.setCreadoPor("Anonimo");
+        usuario2.setCreadoPor("Admin");
         usuario2.setCreadoEn(LocalDateTime.now());
         usuarioRepository.saveAll(List.of(usuario1, usuario2));
 
         ListaReproduccion lista1 = new ListaReproduccion(UUID.randomUUID(), "Lista de reproducción 1", usuario1, new ArrayList<>(), true, false, true);
         lista1.getCanciones().add(cancion1);
-        lista1.setCreadoPor("Anonimo");
+        lista1.setCreadoPor(usuario1.getNombreUsuario());
         lista1.setCreadoEn(LocalDateTime.now());
         listaReproduccionRepository.save(lista1);
 
         ListaReproduccion lista2 = new ListaReproduccion(UUID.randomUUID(), "Lista de reproducción 1", usuario2, new ArrayList<>(), false, true, false);
         lista2.getCanciones().add(cancion2);
-        lista2.setCreadoPor("Anonimo");
+        lista2.setCreadoPor(usuario2.getNombreUsuario());
         lista2.setCreadoEn(LocalDateTime.now());
         listaReproduccionRepository.save(lista2);
     }
 }
+
+ */
