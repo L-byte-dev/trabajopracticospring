@@ -3,9 +3,12 @@ package com.informatorio.trabajopracticospring.service.listareproduccion.impl;
 import com.informatorio.trabajopracticospring.dominio.ListaReproduccion;
 import com.informatorio.trabajopracticospring.dominio.Usuario;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.CrearListaReproduccionDto;
+import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReproduccionAtributosDto;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReproduccionDto;
 import com.informatorio.trabajopracticospring.exception.NotFoundException;
+import com.informatorio.trabajopracticospring.exception.UnauthorizedAccessException;
 import com.informatorio.trabajopracticospring.mapper.listareproduccion.CrearListaReproduccionMapper;
+import com.informatorio.trabajopracticospring.mapper.listareproduccion.ListaReproduccionAtributosMapper;
 import com.informatorio.trabajopracticospring.mapper.listareproduccion.ListaReproduccionMapper;
 import com.informatorio.trabajopracticospring.repository.cancion.CancionRepository;
 import com.informatorio.trabajopracticospring.repository.listareproduccion.ListaReproduccionRepository;
@@ -43,5 +46,25 @@ public class ListaReproduccionServiceImpl implements ListaReproduccionService {
         listaReproduccion.setCreadoEn(LocalDateTime.now());
 
         listaReproduccionRepository.save(listaReproduccion);
+    }
+
+    @Override
+    public boolean actualizarListaReproduccion(UUID idUsuario, UUID idListaReproduccion, ListaReproduccionAtributosDto listaReproduccionAtributosDto) {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new NotFoundException("Usuario","idUsuario",idUsuario.toString()));
+
+        ListaReproduccion listaReproduccion = listaReproduccionRepository.findById(idListaReproduccion)
+                .orElseThrow(() -> new NotFoundException("Lista Reproduccion","idListaReproduccion",idListaReproduccion.toString()));
+
+        if (listaReproduccion.getUsuario().equals(usuario)) {
+            ListaReproduccionAtributosMapper.mapToListaReproduccion(listaReproduccionAtributosDto, listaReproduccion);
+            listaReproduccion.setActualizadoPor(usuario.getNombreUsuario());
+            listaReproduccion.setActualizadoEn(LocalDateTime.now());
+            listaReproduccionRepository.save(listaReproduccion);
+
+            return Boolean.TRUE;
+        } else {
+            throw new UnauthorizedAccessException(idUsuario.toString(), idListaReproduccion.toString());
+        }
     }
 }

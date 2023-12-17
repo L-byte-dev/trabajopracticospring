@@ -3,9 +3,9 @@ package com.informatorio.trabajopracticospring.controller.listareproduccion;
 import com.informatorio.trabajopracticospring.constants.ConstantsUtils;
 import com.informatorio.trabajopracticospring.dto.cancion.CancionDto;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.CrearListaReproduccionDto;
+import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReproduccionAtributosDto;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReproduccionDto;
 import com.informatorio.trabajopracticospring.dto.respuesta.RespuestaDto;
-import com.informatorio.trabajopracticospring.dto.usuario.UsuarioDto;
 import com.informatorio.trabajopracticospring.service.cancion.CancionService;
 import com.informatorio.trabajopracticospring.service.listareproduccion.ListaReproduccionService;
 import lombok.AllArgsConstructor;
@@ -49,4 +49,22 @@ public class ListaReproduccionController {
                 .body(new RespuestaDto(ConstantsUtils.STATUS_201,ConstantsUtils.MESSAGE_201));
     }
 
+    @PutMapping("/usuario/{idUsuario}/{idListaReproduccion}")
+    public ResponseEntity<RespuestaDto> actualizarListaReproduccion(
+            @PathVariable(name = "idUsuario") UUID idUsuario,
+            @PathVariable(name = "idListaReproduccion") UUID idListaReproduccion,
+            @RequestBody ListaReproduccionAtributosDto listaReproduccionAtributosDto) {
+
+        boolean fueActualizado = listaReproduccionService.actualizarListaReproduccion(idUsuario,idListaReproduccion,listaReproduccionAtributosDto);
+
+        if (fueActualizado){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new RespuestaDto(ConstantsUtils.STATUS_200,ConstantsUtils.MESSAGE_200));
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RespuestaDto(ConstantsUtils.STATUS_500,ConstantsUtils.MESSAGE_500));
+        }
+    }
 }
