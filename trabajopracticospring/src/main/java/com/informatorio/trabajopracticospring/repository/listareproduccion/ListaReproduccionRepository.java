@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface ListaReproduccionRepository extends JpaRepository<ListaReproduccion, UUID> {
-    List<ListaReproduccion> findByPublicaAndNombreContainingIgnoreCase(boolean publica, String nombre);
+    List<ListaReproduccion> findByPublicaAndNombreIgnoreCase(boolean publica, String nombre);
     List<ListaReproduccion> findByUsuarioIdOrderByCreadoEnDesc(UUID idUsuario);
 }

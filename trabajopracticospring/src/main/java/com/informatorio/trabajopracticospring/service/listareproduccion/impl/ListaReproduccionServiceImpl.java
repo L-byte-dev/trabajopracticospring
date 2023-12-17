@@ -32,7 +32,7 @@ public class ListaReproduccionServiceImpl implements ListaReproduccionService {
 
     @Override
     public List<ListaReproduccionDto> obtenerListaDeReproduccionPorNombre(String nombre) {
-        List<ListaReproduccion> listaReproduccion = listaReproduccionRepository.findByPublicaAndNombreContainingIgnoreCase(true, nombre);
+        List<ListaReproduccion> listaReproduccion = listaReproduccionRepository.findByPublicaAndNombreIgnoreCase(true, nombre);
         return ListaReproduccionMapper.mapToListasReproduccionDto(listaReproduccion, new ArrayList<>());
     }
 
