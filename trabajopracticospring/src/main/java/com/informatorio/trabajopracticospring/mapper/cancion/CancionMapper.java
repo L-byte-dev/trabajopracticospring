@@ -1,8 +1,13 @@
 package com.informatorio.trabajopracticospring.mapper.cancion;
 
+import com.informatorio.trabajopracticospring.dominio.Artista;
 import com.informatorio.trabajopracticospring.dominio.Cancion;
+import com.informatorio.trabajopracticospring.dto.artista.ArtistaDto;
 import com.informatorio.trabajopracticospring.dto.cancion.CancionDto;
+import com.informatorio.trabajopracticospring.mapper.artista.ArtistaMapper;
+import com.informatorio.trabajopracticospring.mapper.genero.GeneroMapper;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,6 +17,8 @@ public class CancionMapper {
         cancion.setRanking(cancionDto.getRanking());
         cancion.setDuracion(cancionDto.getDuracion());
         cancion.setAlbum(cancionDto.getAlbum());
+        cancion.setGeneros(GeneroMapper.mapToGeneros(cancionDto.getGenerosDto(), new ArrayList<>()));
+        cancion.setArtista(ArtistaMapper.mapToArtista(cancionDto.getArtistaDto(), new Artista()));
 
         return cancion;
     }
@@ -30,6 +37,8 @@ public class CancionMapper {
         cancionDto.setRanking(cancion.getRanking());
         cancionDto.setDuracion(cancion.getDuracion());
         cancionDto.setAlbum(cancion.getAlbum());
+        cancionDto.setGenerosDto(GeneroMapper.mapToGenerosDto(cancion.getGeneros(), new ArrayList<>()));
+        cancionDto.setArtistaDto(ArtistaMapper.mapToArtistaDto(cancion.getArtista(), new ArtistaDto()));
 
         return cancionDto;
     }

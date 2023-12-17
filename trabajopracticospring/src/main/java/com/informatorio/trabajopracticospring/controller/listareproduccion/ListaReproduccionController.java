@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequestMapping(value = "/api/v1/listas-reproduccion", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class ListaReproduccionController {
-    public ListaReproduccionService listaReproduccionService;
+    private ListaReproduccionService listaReproduccionService;
     private CancionService cancionService;
 
     @GetMapping("/usuario/{idUsuario}")
