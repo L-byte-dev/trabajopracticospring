@@ -11,4 +11,5 @@ public interface ListaReproduccionService {
     List<ListaReproduccionDto> obtenerListasDeReproduccionPorUsuario(UUID usuario);
     void crearListaReproduccion(UUID idUsuario, CrearListaReproduccionDto crearListaReproduccionDto);
     boolean actualizarListaReproduccion(UUID idUsuario, UUID idListaReproduccion, ListaReproduccionAtributosDto listaReproduccionAtributosDto);
+    boolean actualizarCancionListaReproduccion(UUID idUsuario, UUID idListaReproduccion, UUID idCancion);
 }

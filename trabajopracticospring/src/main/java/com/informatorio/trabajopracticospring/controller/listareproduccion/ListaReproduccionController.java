@@ -67,4 +67,23 @@ public class ListaReproduccionController {
                     .body(new RespuestaDto(ConstantsUtils.STATUS_500,ConstantsUtils.MESSAGE_500));
         }
     }
+
+    @PutMapping("/usuario/{idUsuario}/{idListaReproduccion}/canciones")
+    public ResponseEntity<RespuestaDto> actualizarCancionListaReproduccion(
+            @PathVariable(name = "idUsuario") UUID idUsuario,
+            @PathVariable(name = "idListaReproduccion") UUID idListaReproduccion,
+            @RequestParam(name = "idCancion") UUID idCancion) {
+
+        boolean fueActualizado = listaReproduccionService.actualizarCancionListaReproduccion(idUsuario,idListaReproduccion,idCancion);
+
+        if (fueActualizado){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new RespuestaDto(ConstantsUtils.STATUS_200,ConstantsUtils.MESSAGE_200));
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RespuestaDto(ConstantsUtils.STATUS_500,ConstantsUtils.MESSAGE_500));
+        }
+    }
 }

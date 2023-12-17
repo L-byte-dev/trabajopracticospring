@@ -39,5 +39,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorRespuestaDto,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<ErrorRespuestaDto> handleUnauthorizedAccessException(UnauthorizedAccessException exception, WebRequest webRequest){
+
+        ErrorRespuestaDto errorRespuestaDto = new ErrorRespuestaDto();
+
+        errorRespuestaDto.setApiPath(webRequest.getDescription(false));
+        errorRespuestaDto.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        errorRespuestaDto.setErrorMessage(exception.getMessage());
+        errorRespuestaDto.setErrorTime(LocalDateTime.now());
+
+        return new ResponseEntity<>(errorRespuestaDto,HttpStatus.UNAUTHORIZED);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.informatorio.trabajopracticospring.service.listareproduccion.impl;
 
+import com.informatorio.trabajopracticospring.dominio.Cancion;
 import com.informatorio.trabajopracticospring.dominio.ListaReproduccion;
 import com.informatorio.trabajopracticospring.dominio.Usuario;
 import com.informatorio.trabajopracticospring.dto.listareproduccion.CrearListaReproduccionDto;
@@ -58,6 +59,38 @@ public class ListaReproduccionServiceImpl implements ListaReproduccionService {
 
         if (listaReproduccion.getUsuario().equals(usuario)) {
             ListaReproduccionAtributosMapper.mapToListaReproduccion(listaReproduccionAtributosDto, listaReproduccion);
+            listaReproduccion.setActualizadoPor(usuario.getNombreUsuario());
+            listaReproduccion.setActualizadoEn(LocalDateTime.now());
+            listaReproduccionRepository.save(listaReproduccion);
+
+            return Boolean.TRUE;
+        } else {
+            throw new UnauthorizedAccessException(idUsuario.toString(), idListaReproduccion.toString());
+        }
+    }
+
+    @Override
+    public boolean actualizarCancionListaReproduccion(UUID idUsuario, UUID idListaReproduccion, UUID idCancion) {
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new NotFoundException("Usuario","idUsuario",idUsuario.toString()));
+
+        ListaReproduccion listaReproduccion = listaReproduccionRepository.findById(idListaReproduccion)
+                .orElseThrow(() -> new NotFoundException("Lista Reproduccion","idListaReproduccion",idListaReproduccion.toString()));
+
+        if (listaReproduccion.getUsuario().equals(usuario)) {
+            List<Cancion> canciones = listaReproduccion.getCanciones();
+
+            boolean contieneCancion = canciones.stream().anyMatch(c -> c.getId().equals(idCancion));
+
+            if (contieneCancion) {
+                canciones.removeIf(c -> c.getId().equals(idCancion));
+            } else {
+                Cancion cancion = cancionRepository.findById(idCancion)
+                        .orElseThrow(() -> new NotFoundException("Cancion","idCancion",idCancion.toString()));
+                canciones.add(cancion);
+            }
+
+            listaReproduccion.setCanciones(canciones);
             listaReproduccion.setActualizadoPor(usuario.getNombreUsuario());
             listaReproduccion.setActualizadoEn(LocalDateTime.now());
             listaReproduccionRepository.save(listaReproduccion);
