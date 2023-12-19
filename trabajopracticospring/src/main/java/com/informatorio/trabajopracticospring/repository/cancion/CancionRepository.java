@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface CancionRepository extends JpaRepository<Cancion, UUID> {
-    List<Cancion> findByNombreIgnoreCaseOrGenerosNombreIgnoreCaseOrArtistaNombreIgnoreCaseOrAlbumIgnoreCase(String nombre, String album, String artista, String genero);
-    List<Cancion> findByArtistaNombreIgnoreCaseOrderByRanking(String artista);
+    List<Cancion> findByNombreIgnoreCaseOrGenerosNombreIgnoreCaseOrArtistaNombreIgnoreCaseOrAlbumIgnoreCaseOrderByRanking(String nombre, String album, String artista, String genero);
+    List<Cancion> findAllByOrderByRanking();
 }

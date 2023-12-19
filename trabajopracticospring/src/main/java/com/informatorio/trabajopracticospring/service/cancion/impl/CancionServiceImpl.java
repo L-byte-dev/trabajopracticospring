@@ -20,15 +20,24 @@ public class CancionServiceImpl implements CancionService  {
     private final ListaReproduccionRepository listaReproduccionRepository;
 
     @Override
-    public List<CancionDto> obtenerTodasLasCanciones(String titulo, String genero, String artista, String album) {
-        List<Cancion> canciones = cancionRepository.findByNombreIgnoreCaseOrGenerosNombreIgnoreCaseOrArtistaNombreIgnoreCaseOrAlbumIgnoreCase(titulo, genero, artista, album);
+    public List<CancionDto> obtenerCancionesAleatoriamente(String titulo, String genero, String artista, String album) {
+        if (titulo == null && genero == null && artista == null && album == null) {
+            List<Cancion> canciones = cancionRepository.findAll();
+            Collections.shuffle(canciones);
+            return CancionMapper.mapToCancionesDto(canciones, new ArrayList<>());
+        }
+        List<Cancion> canciones = cancionRepository.findByNombreIgnoreCaseOrGenerosNombreIgnoreCaseOrArtistaNombreIgnoreCaseOrAlbumIgnoreCaseOrderByRanking(titulo, genero, artista, album);
         Collections.shuffle(canciones);
         return CancionMapper.mapToCancionesDto(canciones, new ArrayList<>());
     }
 
     @Override
-    public List<CancionDto> obtenerCancionesPorArtistaOrdenadasPorRanking(String artista) {
-        List<Cancion> canciones = cancionRepository.findByArtistaNombreIgnoreCaseOrderByRanking(artista);
+    public List<CancionDto> obtenerCancionesOrdenadasPorRanking(String titulo, String genero, String artista, String album)  {
+        if (titulo == null && genero == null && artista == null && album == null) {
+            List<Cancion> canciones = cancionRepository.findAllByOrderByRanking();
+            return CancionMapper.mapToCancionesDto(canciones, new ArrayList<>());
+        }
+        List<Cancion> canciones = cancionRepository.findByNombreIgnoreCaseOrGenerosNombreIgnoreCaseOrArtistaNombreIgnoreCaseOrAlbumIgnoreCaseOrderByRanking(titulo, genero, artista, album);
         return CancionMapper.mapToCancionesDto(canciones, new ArrayList<>());
     }
 

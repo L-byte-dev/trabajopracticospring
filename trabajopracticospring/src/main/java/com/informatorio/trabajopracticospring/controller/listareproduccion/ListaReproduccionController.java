@@ -8,11 +8,13 @@ import com.informatorio.trabajopracticospring.dto.listareproduccion.ListaReprodu
 import com.informatorio.trabajopracticospring.dto.respuesta.RespuestaDto;
 import com.informatorio.trabajopracticospring.service.cancion.CancionService;
 import com.informatorio.trabajopracticospring.service.listareproduccion.ListaReproduccionService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/api/v1/listas-reproduccion", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
+@Validated
 public class ListaReproduccionController {
     private ListaReproduccionService listaReproduccionService;
     private CancionService cancionService;
@@ -51,7 +54,7 @@ public class ListaReproduccionController {
 
     @Transactional
     @PostMapping("/usuario/{idUsuario}")
-    public ResponseEntity<RespuestaDto> crearListaReproduccion(@PathVariable(name = "idUsuario") UUID idUsuario, @RequestBody CrearListaReproduccionDto crearListaReproduccionDto){
+    public ResponseEntity<RespuestaDto> crearListaReproduccion(@PathVariable(name = "idUsuario") UUID idUsuario, @Valid @RequestBody CrearListaReproduccionDto crearListaReproduccionDto){
         listaReproduccionService.crearListaReproduccion(idUsuario, crearListaReproduccionDto);
 
         return ResponseEntity
@@ -63,7 +66,7 @@ public class ListaReproduccionController {
     public ResponseEntity<RespuestaDto> actualizarListaReproduccion(
             @PathVariable(name = "idUsuario") UUID idUsuario,
             @PathVariable(name = "idListaReproduccion") UUID idListaReproduccion,
-            @RequestBody ListaReproduccionAtributosDto listaReproduccionAtributosDto) {
+            @Valid @RequestBody ListaReproduccionAtributosDto listaReproduccionAtributosDto) {
 
         boolean fueActualizado = listaReproduccionService.actualizarListaReproduccion(idUsuario,idListaReproduccion,listaReproduccionAtributosDto);
 

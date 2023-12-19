@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CancionService {
-    List<CancionDto> obtenerTodasLasCanciones(String titulo, String genero, String artista, String album);
-    List<CancionDto> obtenerCancionesPorArtistaOrdenadasPorRanking(String artista);
+    List<CancionDto> obtenerCancionesAleatoriamente(String titulo, String genero, String artista, String album);
+    List<CancionDto> obtenerCancionesOrdenadasPorRanking(String titulo, String genero, String artista, String album);
     List<CancionDto> obtenerCancionesListasDeReproduccion(UUID usuario);
 }

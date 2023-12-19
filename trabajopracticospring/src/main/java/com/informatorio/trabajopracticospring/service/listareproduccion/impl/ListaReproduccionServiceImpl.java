@@ -51,9 +51,11 @@ public class ListaReproduccionServiceImpl implements ListaReproduccionService {
         ListaReproduccion listaReproduccion = CrearListaReproduccionMapper.mapToListaReproduccion(crearListaReproduccionDto, new ListaReproduccion());
         listaReproduccion.setId(UUID.randomUUID());
         listaReproduccion.setCanciones(cancionRepository.findAllById(crearListaReproduccionDto.getCanciones()));
-        listaReproduccion.setCreadoPor(usuario.getNombreUsuario());
         listaReproduccion.setUsuario(usuario);
+        listaReproduccion.setCreadoPor(usuario.getNombreUsuario());
         listaReproduccion.setCreadoEn(LocalDateTime.now());
+        listaReproduccion.setActualizadoPor(usuario.getNombreUsuario());
+        listaReproduccion.setActualizadoEn(LocalDateTime.now());
 
         listaReproduccionRepository.save(listaReproduccion);
     }

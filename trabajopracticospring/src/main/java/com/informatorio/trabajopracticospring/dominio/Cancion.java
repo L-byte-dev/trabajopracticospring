@@ -29,7 +29,7 @@ public class Cancion {
     @Column(nullable = false)
     private String nombre;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private int ranking;
 
     @ManyToMany
@@ -37,12 +37,12 @@ public class Cancion {
     inverseJoinColumns = @JoinColumn(name = "genero_id"))
     private List<Genero> generos = new ArrayList<>();
 
-    @Column
+    @Column(nullable = false)
     private Double duracion;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Artista artista;
 
-    @Column
+    @Column(nullable = false)
     private String album;
 }

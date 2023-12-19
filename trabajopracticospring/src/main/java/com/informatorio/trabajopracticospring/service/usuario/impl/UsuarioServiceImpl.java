@@ -27,6 +27,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         nuevoUsuario.setId(UUID.randomUUID());
         nuevoUsuario.setCreadoPor("Admin");
         nuevoUsuario.setCreadoEn(LocalDateTime.now());
+        nuevoUsuario.setActualizadoPor("Admin");
+        nuevoUsuario.setActualizadoEn(LocalDateTime.now());
 
         usuarioRepository.save(nuevoUsuario);
     }

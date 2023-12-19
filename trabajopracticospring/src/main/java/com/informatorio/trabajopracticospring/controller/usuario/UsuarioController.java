@@ -4,11 +4,13 @@ import com.informatorio.trabajopracticospring.constants.ConstantsUtils;
 import com.informatorio.trabajopracticospring.dto.respuesta.RespuestaDto;
 import com.informatorio.trabajopracticospring.dto.usuario.UsuarioDto;
 import com.informatorio.trabajopracticospring.service.usuario.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -16,12 +18,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/api/v1/usuarios", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
+@Validated
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @Transactional
     @PostMapping
-    public ResponseEntity<RespuestaDto> crearUsuario(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<RespuestaDto> crearUsuario(@Valid @RequestBody UsuarioDto usuarioDto){
         usuarioService.crearUsuario(usuarioDto);
 
         return ResponseEntity

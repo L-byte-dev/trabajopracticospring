@@ -26,7 +26,7 @@ public class ListaReproduccion extends EntidadBase {
     @Column(length = 36,columnDefinition = "varchar(36)",updatable = false,nullable = false)
     private UUID id;
 
-    @Column
+    @Column(nullable = false)
     private String nombre;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -37,12 +37,12 @@ public class ListaReproduccion extends EntidadBase {
     inverseJoinColumns = @JoinColumn(name = "cancion_id"))
     private List<Cancion> canciones = new ArrayList<>();
 
-    @Column
+    @Column(nullable = false)
     private boolean repite;
 
-    @Column
+    @Column(nullable = false)
     private boolean aleatorio;
 
-    @Column
+    @Column(nullable = false)
     private boolean publica;
 }

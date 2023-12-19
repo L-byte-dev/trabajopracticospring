@@ -4,6 +4,7 @@ import com.informatorio.trabajopracticospring.dto.cancion.CancionDto;
 import com.informatorio.trabajopracticospring.service.cancion.CancionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping(value = "/api/v1/canciones", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
+@Validated
 public class CancionController {
     private CancionService cancionService;
 
@@ -26,10 +28,10 @@ public class CancionController {
             @RequestParam(name = "album", required = false) String album,
             @RequestParam(name = "orderByRanking", required = false) boolean orderByRanking
     ){
-        if (Objects.nonNull(artista) && orderByRanking) {
-            return cancionService.obtenerCancionesPorArtistaOrdenadasPorRanking(artista);
+        if (orderByRanking) {
+            return cancionService.obtenerCancionesOrdenadasPorRanking(titulo, genero, artista, album);
         } else {
-            return cancionService.obtenerTodasLasCanciones(titulo, genero, artista, album);
+            return cancionService.obtenerCancionesAleatoriamente(titulo, genero, artista, album);
         }
     }
 }
